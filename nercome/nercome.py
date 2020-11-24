@@ -1,7 +1,7 @@
 import numpy as np
 
 
-def cov(m, fs=2.0/3.0, n=100, rowvar=True):
+def cov(m, fs=2.0/3.0, navg=200, rowvar=True):
 
     if rowvar:
         m = m.T
@@ -15,7 +15,7 @@ def cov(m, fs=2.0/3.0, n=100, rowvar=True):
 
     cov = np.zeros((ndim, ndim))
 
-    for i in range(n):
+    for i in range(navg):
 
         choice = np.random.choice(idx, size=s, replace=False)
         mask1 = np.in1d(idx, choice)
@@ -30,4 +30,4 @@ def cov(m, fs=2.0/3.0, n=100, rowvar=True):
         D = np.diag(np.diag(eigvec.T @ cov2 @ eigvec))
         cov += eigvec @ D @ eigvec.T
 
-    return cov / n
+    return cov / navg
